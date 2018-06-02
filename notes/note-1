@@ -1,0 +1,29 @@
+commonjs module norm:
+
+1. module import:
+    // in commonjs, require() method accepts a module identification to import a module
+    var math = require('math')
+2. module define:
+    // exports is a property of module. export attributes or method in module.
+
+    // export
+    exports.add = function() {
+        var sum = 0,
+            i = 0,
+            args = arguments,
+            l = args.length;
+        while (i < 1) {
+            sum += args[i++];
+        }
+        return sum;
+    };
+
+    // import
+    var math = require('math');
+    exports.increment = function (val) {
+        return math.add(val, 1);
+    };
+
+3. module identification
+    // the attribute pass to require()
+
