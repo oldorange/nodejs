@@ -1,0 +1,15 @@
+1) import module in nodejs steps:
+    1. path analysis
+    2. file locate
+    3. compile & execute
+
+2) import module from cache first: the object it has been compiled and executed.
+
+3) module identification analysis:
+    1. types:
+        a) core module (http, fs, path)
+        b) file module start with . or ..
+        c) file module start with /
+        d) file module not in path pattern (self define connect module)
+    
+    
