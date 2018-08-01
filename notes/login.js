@@ -22,11 +22,15 @@ var promise = new Promise(function(resolve, reject) {
     }
   });
 
-  window.setInterval(function(){ // Set interval for checking
-    var date = new Date(); // Create a Date object to find out what time it is
-    if(date.getHours() == 11 && date.getMinutes() == 42){ // Check the time
-        console.log(date.getHours(),date.getMinutes())
-        console.log(date)
+window.setInterval(function(){
+    var date = new Date();
+    if(date.getHours() == 9 && date.getMinutes() == 50){
+      document.getElementsByName('login')[0].click();
     }
     console.log(date.getHours(),date.getMinutes())
-}, 500); // Repeat every 60000 milliseconds (1 minute)
+}, 1000);
+
+
+document.getElementsByName('password')[0].value() = "pwd";
+document.getElementsByName('password')[0].value() = "pwd";
+document.getElementsByName('login')[0].click();
