@@ -10,6 +10,8 @@ const notes = require('./notes.js');
 var filteredArray = _.uniq(['Andrew', 1, 'Andrew', 1, 2, 3, 4]);
 console.log(filteredArray);
 
+
+console.log(_.isString([1,2]));
 // console.log('Result:', notes.add(9, -2));
 
 // var user = os.userInfo();
