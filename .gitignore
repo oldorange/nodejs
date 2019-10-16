@@ -1,1 +1,2 @@
 /src/gqltest/node_modules/*
+src/nodejstest/node_modules/.bin/semver
