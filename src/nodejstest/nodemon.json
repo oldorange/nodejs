@@ -1,0 +1,8 @@
+
+{
+    "env":{
+        "MONGO_USER": "oldorange",
+        "MONGO_PASSWORD": "a9031167",
+        "MONGO_DB": "task-manager"
+    }
+}
