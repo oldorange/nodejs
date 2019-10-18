@@ -63,24 +63,33 @@ app.use(
         );
       },
       createEvent: args => {
-        // const event = {
-        //   _id: Math.random().toString(),
-        //   title: args.eventInput.title,
-        //   description: args.eventInput.description,
-        //   price: +args.eventInput.price,
-        //   date: args.eventInput.date
-        // };
         const event = new Event({
           title: args.eventInput.title,
           description: args.eventInput.description,
           price: +args.eventInput.price,
           date: new Date(args.eventInput.date),
-          creator: ''
+          creator: '5da8d6dee6cdce5dfc4513fa'
         });
-        return event.save().then( result => {
+        let createEvent;
+        return event
+        .save()
+        .then(result => {
+          createEvent = {...result._doc, _id: result._doc._id.toString()};
+          return User.findById('5da8d6dee6cdce5dfc4513fa')
+        })
+        .then(user => {
+          console.log(user);
+          if(!user){
+            throw new Error('User not found');
+          }
+          user.createdEvents.push(event);
+          return user.save();
+        })
+        .then(result => {
           console.log(result);
-          return {...result._doc, _id: result._doc._id.toString() };
-        } ).catch(err => {
+          return createEvent;
+        })
+        .catch(err => {
           console.log(err);
           throw err;
         });
