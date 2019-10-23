@@ -8,9 +8,29 @@ const Event = require('./models/event');
 const User = require('./models/user');
 const app = express();
 
-const events = [];
-
 app.use(bodyParser.json());
+
+const user = userId => {
+  return User.findById(userId)
+  .then(user => {
+    return { ...user._doc, _id: user.id, createdEvents: events.bind(this, user._doc.createdEvents) }
+  })
+  .catch(err => {
+    throw err;
+  })
+};
+
+const events = eventIds => {
+  return Event.find({ _id: {$in : eventIds }})
+  .then(events => {
+    return events.map(event => {
+      return { ...event._doc, _id: event.id, creator: user.bind(this, event.creator) }
+    })
+  })
+  .catch(err => {
+    throw err;
+  })
+};
 
 app.use(
   '/graphql',
@@ -22,11 +42,13 @@ app.use(
           description: String!
           price: Float!
           date: String!
+          creator: User!
         }
         type User{
           _id: ID!
           email: String!
           passowrd: String
+          createdEvents: [Event!]
         }
         input EventInput {
           title: String!
@@ -52,9 +74,14 @@ app.use(
     `),
     rootValue: {
       events: () => {
-        return Event.find().then(events => {
+        return Event.find().populate('creator')
+        .then(events => {
           return events.map(event => {
-            return {...event._doc , _id: event.id };
+            return {
+              ...event._doc,
+              _id: event.id,
+              creator: user.bind(this, event._doc.creator)
+             };
           });
         }).catch(
           err => {
@@ -70,11 +97,11 @@ app.use(
           date: new Date(args.eventInput.date),
           creator: '5da8d6dee6cdce5dfc4513fa'
         });
-        let createEvent;
+        let createdEvent;
         return event
         .save()
         .then(result => {
-          createEvent = {...result._doc, _id: result._doc._id.toString()};
+          createdEvent = {...result._doc, _id: result._doc._id.toString()};
           return User.findById('5da8d6dee6cdce5dfc4513fa')
         })
         .then(user => {
@@ -87,7 +114,7 @@ app.use(
         })
         .then(result => {
           console.log(result);
-          return createEvent;
+          return createdEvent;
         })
         .catch(err => {
           console.log(err);
@@ -122,11 +149,13 @@ app.use(
     graphiql: true
   })
 );
-
+console.log(process.env.CONNECT_STRING);
 mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_USER}:${
-    process.env.MONGO_PASSWORD
-  }@kayunwebsite-lotvj.gcp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, { useUnifiedTopology: true,useNewUrlParser: true }
+  // `mongodb+srv://${process.env.MONGO_USER}:${
+  //   process.env.MONGO_PASSWORD
+  // }@kayunwebsite-lotvj.gcp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+  process.env.CONNECT_STRING
+  , { useUnifiedTopology: true,useNewUrlParser: true }
   ).then(() => {
     app.listen(3000);
     console.log("Listening on port 3000!");

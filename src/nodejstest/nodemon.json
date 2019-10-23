@@ -3,6 +3,7 @@
     "env":{
         "MONGO_USER": "oldorange",
         "MONGO_PASSWORD": "a9031167",
-        "MONGO_DB": "task-manager"
+        "MONGO_DB": "task-manager",
+        "CONNECT_STRING": "mongodb://oldorange:a9031167@kayunwebsite-shard-00-00-lotvj.gcp.mongodb.net:27017,kayunwebsite-shard-00-01-lotvj.gcp.mongodb.net:27017,kayunwebsite-shard-00-02-lotvj.gcp.mongodb.net:27017/task-manager?ssl=true&replicaSet=kayunWebsite-shard-0&authSource=admin&retryWrites=true&w=majority"
     }
 }
