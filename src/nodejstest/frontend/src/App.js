@@ -5,7 +5,7 @@ import EventsPage from './pages/Events';
 import BookingsPage from './pages/Bookings';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Switch>
