@@ -17,12 +17,17 @@ module.exports = {
     if(!req.isAuth){
       throw new Error('Unauthenticated');
     }
-    const fetchedEvent = await Event.findOne({ _id: args.eventId });
-    const booking = new Booking({
-      user: req.userId,
-      event: fetchedEvent
-    });
-    const result = await booking.save();
+    try{
+      const fetchedEvent = await Event.findOne({ _id: args.eventId });
+      const booking = new Booking({
+        user: req.userId,
+        event: fetchedEvent
+      });
+      const result = await booking.save();
+    }
+    catch(err){
+      throw err;
+    }
     return transformBooking(result);
   },
   cancelBooking: async (args,req) => {
