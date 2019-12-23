@@ -30,7 +30,7 @@ const AuthPage = props => {
           `
         };
     
-        if (!this.state.isLogin) {
+        if (!isLogin) {
           requestBody = {
             query: `
               mutation {
@@ -43,7 +43,7 @@ const AuthPage = props => {
           };
         }
     
-        fetch('http://localhost:8000/graphql', {
+        fetch('http://localhost:3000/graphql', {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: {
