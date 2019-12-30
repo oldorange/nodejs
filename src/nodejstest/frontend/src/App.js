@@ -20,38 +20,40 @@ const App = () => {
 
   const logout = () => {
     setToken({ token: null });
-    setuserId({ userId: null });
+    setuserId({ userId: 0 });
   };
 
   return (
     <BrowserRouter>
-        <React.Fragment>
-          <AuthContext.Provider
-            value={{
-              token: token,
-              userId: userId,
-              login: login,
-              logout: logout
-            }}
-          >
-            <MainNavigation />
-            <main className="main-content">
-              <Switch>
-                {!token && <Redirect from="/" to="/auth" exact />}
-                {token && <Redirect from="/" to="/events" exact />}
-                {token && <Redirect from="/auth" to="/events" exact />}
-                {!token && (
-                  <Route path="/auth" component={AuthPage} />
-                )}
-                <Route path="/events" component={EventsPage} />
-                {token && (
-                  <Route path="/bookings" component={BookingsPage} />
-                )}
-              </Switch>
-            </main>
-          </AuthContext.Provider>
-        </React.Fragment>
-      </BrowserRouter>
+      <React.Fragment>
+        <AuthContext.Provider
+          value={{
+            token: token,
+            userId: userId,
+            login: login,
+            logout: logout
+          }}
+        >
+          <MainNavigation />
+          <main className="main-content">
+            <Switch>
+              {token && <Redirect from="/" to="/events" exact />}
+              {token && (
+                <Redirect from="/auth" to="/events" exact />
+              )}
+              {!token && (
+                <Route path="/auth" component={AuthPage} />
+              )}
+              <Route path="/events" component={EventsPage} />
+              {token && (
+                <Route path="/bookings" component={BookingsPage} />
+              )}
+              {!token && <Redirect to="/auth" exact />}
+            </Switch>
+          </main>
+        </AuthContext.Provider>
+      </React.Fragment>
+    </BrowserRouter>
   );
 }
 
