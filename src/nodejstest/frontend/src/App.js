@@ -14,13 +14,13 @@ const App = () => {
   const [tokenExpiration, settokenExpiration] = useState(null);
 
   const login = (token, userId, tokenExpiration) => {
-    setToken({ token: token });
-    setuserId({ userId: userId });
+    setToken(token);
+    setuserId(userId);
   };
 
   const logout = () => {
-    setToken({ token: null });
-    setuserId({ userId: 0 });
+    setToken(null);
+    setuserId(0);
   };
 
   return (
