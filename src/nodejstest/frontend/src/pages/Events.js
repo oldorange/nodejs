@@ -17,9 +17,11 @@ const EventsPage = props => {
         setCreating(false);
     };
 
+
+
     return (
         <React.Fragment>
-        {creating && <Backdrop />}
+        {creating && <div onClick={modalCancelHandler}><Backdrop /></div>}
         {creating && (
           <Modal
             title="Add Event"
